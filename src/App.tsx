@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Grid from "./components/Grid";
+
+const size = 10;
+const array = Array(size)
+  .fill(false)
+  .map((x) => Array(size).fill(false));
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [data, setData] = useState(array);
+
+  const onCellClick = (i: number) => (j: number) => () => {
+    const newData = [...data];
+    newData[i][j] = !newData[i][j];
+
+    setData(newData);
+  };
+
+  return <Grid data={data} onCellClick={onCellClick} />;
 }
 
 export default App;

@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Cell from "./Cell";
 
-type Props = {
+type CellRenderProps = {index: number, data: boolean};
+
+export type RowProps = {
   data: boolean[];
-  index: number;
-  onCellClick: (j: number) => () => void;
+  cell: React.FC<CellRenderProps>;
 };
 
 const RowStyledView = styled.div`
@@ -13,17 +13,10 @@ const RowStyledView = styled.div`
   flex-flow: row nowrap;
 `;
 
-const Row = ({ data, onCellClick, index }: Props) => {
+const Row = ({ data, cell }: RowProps) => {
   return (
     <RowStyledView>
-      {data.map((cell, j) => (
-        <Cell
-          index={`${index}${j}`}
-          key={`cell-${j}`}
-          data={cell}
-          onCellClick={onCellClick(j)}
-        />
-      ))}
+      {data.map((cellData, j) => cell({ data: cellData, index: j }))}
     </RowStyledView>
   );
 };

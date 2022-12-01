@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-type Props = {
+export type CellProps = {
   data: boolean;
-  index: string;
+  index: string | number;
   onCellClick: () => void;
 };
 
@@ -14,7 +14,7 @@ const CellViewStyled = styled.div<{ checked: boolean }>`
   background-color: ${({ checked }) => (checked ? "#9ED5C5" : "#DEF5E5")};
 `;
 
-const Cell = ({ data, onCellClick, index }: Props) => {
+const Cell = ({ data, onCellClick, index }: CellProps) => {
   return (
     <>
       {console.log("Cell rerendered", index)}

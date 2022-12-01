@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import Row from "./Row";
+
+type RowRenderProps = {index: number, data: boolean[]};
 
 type Props = {
+  row: React.FC<RowRenderProps>;
   data: boolean[][];
-  onCellClick: (i: number) => (j: number) => () => void;
 };
 
 const GridStyledView = styled.div`
@@ -11,17 +12,10 @@ const GridStyledView = styled.div`
   flex-flow: column nowrap;
 `;
 
-const Grid = ({ data, onCellClick }: Props) => {
+const Grid: React.FC<Props> = (props) => {
   return (
     <GridStyledView>
-      {data.map((row, i) => (
-        <Row
-          index={i}
-          key={`row-${i}`}
-          data={row}
-          onCellClick={onCellClick(i)}
-        />
-      ))}
+      {props.data.map((data, index) => props.row({ data, index }))}
     </GridStyledView>
   );
 };

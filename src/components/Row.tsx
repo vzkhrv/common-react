@@ -1,17 +1,5 @@
-import React from "react";
-import styled from "styled-components";
-
-type CellRenderProps = {index: number, data: boolean};
-
-export type RowProps = {
-  data: boolean[];
-  cell: React.FC<CellRenderProps>;
-};
-
-const RowStyledView = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-`;
+import { RowProps } from "../utils/utils";
+import { RowStyledView } from "./RowViewStyled";
 
 const Row = ({ data, cell }: RowProps) => {
   return (

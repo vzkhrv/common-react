@@ -1,26 +1,21 @@
-import { useState } from "react";
+import { useRef } from "react";
 import Cell from "./components/Cell";
 import Grid from "./components/Grid";
 import Row from "./components/Row";
-
-const size = 10;
-const array: boolean[][] = Array(size)
-  .fill(false)
-  .map((x) => Array(size).fill(false));
+import { createGrid } from "./utils/utils";
 
 function App() {
-  const [data, setData] = useState(array);
+  const data = useRef(createGrid());
+  const grid = useRef(createGrid());
 
-  const onCellClick = (i: number, j: number) => () => {
-    const newData = [...data];
-    newData[i][j] = !newData[i][j];
-
-    setData(newData);
+  const onCellClick = (i: number, j: number) => (update: (value: boolean) => void) => {
+    data.current[i][j] = !data.current[i][j];
+    update(data.current[i][j]);
   };
 
   return (
     <Grid
-      data={data}
+      data={grid.current}
       row={(rowProps) => (
         <Row
           key={`row-${rowProps.index}`}
@@ -29,7 +24,7 @@ function App() {
             <Cell
               index={`${rowProps.index}${cellProps.index}`}
               key={`cell-${cellProps.index}`}
-              data={cellProps.data}
+              data={data.current[rowProps.index][cellProps.index]}
               onCellClick={onCellClick(rowProps.index, cellProps.index)}
             />
           )}

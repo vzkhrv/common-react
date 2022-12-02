@@ -1,24 +1,25 @@
-import styled from "styled-components";
-
-export type CellProps = {
-  data: boolean;
-  index: string | number;
-  onCellClick: () => void;
-};
-
-const CellViewStyled = styled.div<{ checked: boolean }>`
-  width: 10px;
-  height: 10px;
-  border: 1px solid #8ec3b0;
-
-  background-color: ${({ checked }) => (checked ? "#9ED5C5" : "#DEF5E5")};
-`;
+import { useRef, useState } from "react";
+import { CellProps } from "../utils/utils";
+import { CellViewStyled } from "./CellViewStyled";
 
 const Cell = ({ data, onCellClick, index }: CellProps) => {
+  const [checked, forceUpdate] = useState(data);
+  const flag = useRef(false);
+  
+  const handleClick = () => {
+    onCellClick(forceUpdate);
+  }
+
+  if (flag.current) {
+    console.log("Cell rerendered", index);
+  } else {
+    flag.current = true;
+  }
+
+
   return (
     <>
-      {console.log("Cell rerendered", index)}
-      <CellViewStyled checked={data} onClick={onCellClick} />
+      <CellViewStyled checked={checked} onClick={handleClick} />
     </>
   );
 };
